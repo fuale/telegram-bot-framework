@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+use App\Core\Console\Application;
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+new Application();
