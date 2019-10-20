@@ -7,13 +7,11 @@ services:
       - 8080:80
     volumes:
       - .:/bot
-      - ./docker/nginx/default.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/nginx.conf
     depends_on:
       - php
   php:
-    build: docker/php
-    expose:
-      - 9000
+    build: app
     restart: always
     volumes:
       - .:/bot
@@ -24,14 +22,13 @@ services:
     restart: always
     expose:
       - 3306
+    ports:
+      - 3306:3306
     volumes:
-      - db_data:/var/lib/mysql
+      - ./structure.sql:/docker-entrypoint-initdb.d/structure.sql
     environment:
       MYSQL_DATABASE: "test"
       MYSQL_USER: "test"
       MYSQL_PASSWORD: "test"
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-
-volumes:
-  db_data:
